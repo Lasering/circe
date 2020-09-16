@@ -28,10 +28,10 @@ class EncoderSuite extends CirceSuite {
     assert(Decoder[Map[String, Int]].apply(newEncoder(m).hcursor) === Right(m.updated(k, v)))
   }
   
-  "at" should "encode output in JsonObject" in forAll { (k: String, v: Map[String, Int]) =>
-    val newEncoder = Encoder[Map[String, Int]].at(k)
+  "at" should "encode output in JsonObject" in forAll { (field: String, data: Map[String, Int]) =>
+    val newEncoder = Encoder[Map[String, Int]].at(field)
 
-    assert(Decoder[Map[String, Int]].at(k).apply(newEncoder(m).hcursor) === Right(m))
+    assert(Decoder[Map[String, Int]].at(field).apply(newEncoder(data).hcursor) === Right(data))
   }
 
   "Encoder.AsObject#mapJsonObject" should "transform encoded output" in forAll {
